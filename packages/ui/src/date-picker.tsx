@@ -13,20 +13,20 @@ import {
 import { DayPicker, OnSelectHandler } from "react-day-picker";
 
 
-export type DatePickerProps = {
+ type DatePickerProps = {
   value?: Date,
   onChange?: OnSelectHandler<Date | undefined>,
   disabled?: boolean,
   placeholder?: string,
 } & Omit<React.ComponentProps<typeof DayPicker>, "selected"|"onSelect"|"mode"|"disabled">;
 
-export const DatePicker = ({
+function DatePicker ({
   value,
   disabled,
   placeholder="Pick a date",
   onChange,
   ...props
-}: DatePickerProps) => {
+}: DatePickerProps) {
   console.log("date picker value:",value)
   return (
     <Popover>
@@ -56,3 +56,4 @@ export const DatePicker = ({
   );
 };
 
+export { DatePicker }

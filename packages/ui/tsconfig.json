@@ -1,7 +1,7 @@
 {
   "extends": "@loongkirin/typescript-config/react-library.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
   },
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"]

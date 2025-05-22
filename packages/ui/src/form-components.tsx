@@ -14,12 +14,13 @@ import { Combobox, ComboboxProps } from "./combobox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup } from "./select"
 import { RadioGroup, RadioGroupItem } from "./radio-group"
 import { Captcha } from "./captcha"
+import { DatePicker } from "./date-picker"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "../lib/utils"
 import { DropdownOption, Captcha as CaptchaValue } from "../types/ui-types"
 import useCaptcha from "../hooks/use-captcha"
-import { DatePicker } from "./date-picker"
+
 
 
 function Form({ className, ...props }: React.ComponentProps<"div">) {
@@ -145,7 +146,7 @@ function FormFieldError({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="form-field-error"
       className={cn(
-        "font-semibold text-rose-300 text-sm",
+        "font-semibold text-red-400 text-sm",
         className
       )}
       {...props}

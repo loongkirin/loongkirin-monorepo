@@ -9,6 +9,25 @@ Run the following command:
 ```sh
 npx create-turbo@latest -e with-tailwind
 ```
+## Run this repo
+
+- Install all neccessary packages
+
+```sh
+npm install
+```
+
+- Build this Monorepo
+
+```sh
+npm run build
+```
+
+- Run app
+
+```sh
+npm run dev -w web
+```
 
 ## What's inside?
 
