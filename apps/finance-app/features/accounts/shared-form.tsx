@@ -1,5 +1,12 @@
+"use client";
+
 import { formOptions } from '@tanstack/react-form'
 import { z } from 'zod'
+import { ColumnDef } from "@tanstack/react-table"
+import { Button } from '@loongkirin/ui/src/button';
+import {ArrowUpDown, ArrowDown, ArrowUp, ArrowUpAZ, ArrowDownAZ, Funnel } from 'lucide-react'
+import { Popover, PopoverContent, PopoverTrigger } from '@loongkirin/ui/src/popover';
+import { Input } from '@loongkirin/ui/src/input';
 
 export const PeopleSchema = z.object({
   fullName: z
@@ -67,3 +74,33 @@ export const peopleFormOpts = formOptions({
     }
   } as Peopele,
 })
+
+export type Payment = {
+  id: string
+  amount: number
+  status: "pending" | "processing" | "success" | "failed"
+  email: string
+}
+
+export const columns: ColumnDef<Payment>[] = [
+  {
+    accessorKey: "status",
+    header: "Status",
+    id: "status",
+  },
+  // {
+  //   accessorKey: "email",
+  //   header: "Email",
+  // },
+  {
+    accessorKey: "email",
+    header: "Email",
+    id: "email",
+  },
+  {
+    accessorKey: "amount",
+    // header: "Amount",
+    header: "Amount",
+    id: "amount"
+  },
+]

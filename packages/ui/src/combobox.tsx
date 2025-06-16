@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
+import { CheckIcon, ChevronsUpDownIcon } from "lucide-react"
 
 import { cn } from "../lib/utils"
 import { Button } from "./button"
@@ -40,7 +40,7 @@ function Combobox({id, name, dropdownOptions, selectPlaceholder, searchPlacehold
           {value
             ? dropdownOptions?.find((item) => item.value === value)?.label
             : <div className="opacity-50">{selectPlaceholder}</div>}
-          <ChevronsUpDown className="opacity-50" />
+          <ChevronsUpDownIcon className="opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0 min-w-[var(--radix-popover-trigger-width)]">
@@ -62,7 +62,7 @@ function Combobox({id, name, dropdownOptions, selectPlaceholder, searchPlacehold
                   disabled={item.disabled}
                 >
                   {item.label}
-                  <Check
+                  <CheckIcon
                     className={cn(
                       "ml-auto",
                       selectedValue === item.value ? "opacity-100" : "opacity-0"

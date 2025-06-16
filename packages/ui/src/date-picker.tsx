@@ -1,6 +1,8 @@
-import * as React from "react";
+"use client"
+
+import React from "react";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 
 import { cn } from "../lib/utils";
 import { Button } from "./button";
@@ -27,9 +29,9 @@ function DatePicker ({
   onChange,
   ...props
 }: DatePickerProps) {
-  console.log("date picker value:",value)
+  const [open, setOpen] = React.useState(false)
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           disabled={disabled}
@@ -47,7 +49,12 @@ function DatePicker ({
         <Calendar
           mode="single"
           selected={value}
-          onSelect={onChange}
+          onSelect={(selected, triggerDate, modifiers, e) => {
+            if(onChange) {
+              onChange(selected, triggerDate, modifiers, e)
+            }
+            setOpen(false)
+          }}
           disabled={disabled}
           {...props}
         />

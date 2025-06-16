@@ -167,7 +167,7 @@ export const FormDist = () => {
           />
           <form.AppField
             name="captcha"
-            children={(field) => <field.FormCaptchaField label="Captcha" orientation={"horizontal"}/>}
+            children={(field) => <field.FormCaptchaField label="Captcha" orientation={"horizontal"} fetchUrl="/"/>}
           />
           <form.AppForm>
             <form.FormSubscribeButton>Submit</form.FormSubscribeButton>

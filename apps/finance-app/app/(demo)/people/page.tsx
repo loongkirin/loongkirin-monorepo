@@ -1,9 +1,13 @@
-import { FormDist } from '../../../features/components/login-form-dist'
+import { FormDist } from '@/features/components/login-form-dist'
+import PaymentPage from '@/features/components/payment-data-table'
 import React from 'react'
 
 const page = () => {
   return (
-    <FormDist/>
+    <div>
+      <FormDist/>
+      <PaymentPage/>
+    </div>
   )
 }
 
