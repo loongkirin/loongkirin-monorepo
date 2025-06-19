@@ -2,7 +2,7 @@
 
 import { createFormHook } from "@tanstack/react-form"
 import { useFormContext, useFieldContext, fieldContext, formContext } from "../hooks/use-form"
-import { FormCaptchaField, FormCheckboxField, FormComboboxField, FormDatePickerField, FormField, FormInputField, FormRadioGroupField, FormSelectField, FormSubscribeButton, FormSwitchField, FormTextareaField } from "./form-components"
+import { FormCaptchaField, FormCheckboxField, FormComboboxField, FormDatePickerField, FormDatePickerMultipleField, FormDatePickerRangeField, FormField, FormInputField, FormRadioGroupField, FormSelectField, FormSubscribeButton, FormSwitchField, FormTextareaField } from "./form-components"
 
 const { useAppForm, withForm } = createFormHook({
   fieldComponents: {
@@ -12,6 +12,8 @@ const { useAppForm, withForm } = createFormHook({
     FormCheckboxField,
     FormSwitchField,
     FormDatePickerField,
+    FormDatePickerRangeField,
+    FormDatePickerMultipleField,
     FormComboboxField,
     FormSelectField,
     FormRadioGroupField,

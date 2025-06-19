@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import * as React from "react";
 import { Input } from "./input";
 
 type InputDebouncedProps = {
@@ -10,9 +10,9 @@ type InputDebouncedProps = {
 } & Omit<React.ComponentProps<"input">, "onChange">;
 
 function InputDebounced({ debounceTime = 500, value : initialValue, onChange, ...props }: InputDebouncedProps) {
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = React.useState(initialValue);
 
-  useEffect(() => {
+   React.useEffect(() => {
     const timeout = setTimeout(() => {
       onChange(value);
     }, debounceTime);

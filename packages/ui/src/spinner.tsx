@@ -1,5 +1,5 @@
 import React from "react"
-import { LoaderCircle } from "lucide-react"
+import { LoaderCircleIcon } from "lucide-react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "../lib/utils"
 
@@ -31,7 +31,7 @@ function Spinner ({
       className= {cn(spinnerVariants({ orientation }), "mx-auto w-full flex items-center justify-center gap-2 text-muted-foreground", className)} 
       {...props}
     >
-      <LoaderCircle className= {cn(spinnerVariants({ size }), "animate-spin transition-transform")}/>
+      <LoaderCircleIcon className= {cn(spinnerVariants({ size }), "animate-spin transition-transform")}/>
       {children}
     </div>
   )

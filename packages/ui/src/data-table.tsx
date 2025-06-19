@@ -1,16 +1,16 @@
 "use client"
 
-import React, { CSSProperties } from "react"
+import * as React from "react"
 import { 
-  ArrowUpDown, 
-  ArrowUpAZ, 
-  ArrowDownAZ, 
-  GripVertical, 
-  GripHorizontal, 
-  ListFilter, 
-  Pin, 
-  PinOff, 
-  Settings
+  ArrowUpDownIcon, 
+  ArrowUpAZIcon, 
+  ArrowDownAZIcon, 
+  GripVerticalIcon, 
+  GripHorizontalIcon, 
+  ListFilterIcon, 
+  PinIcon, 
+  PinOffIcon, 
+  SettingsIcon
 } from "lucide-react";
 import {
   Table as TanStackTable,
@@ -100,7 +100,7 @@ function DraggableTableHeader({
   const isFirstRightPinnedColumn = isPinned === "right" && header.column.getIsFirstColumn("right")
   const isSystemColumn = header.column.id === SYSTEM_SELECT_COLUMN_ID || header.column.id === SYSTEM_SN_COLUMN_ID
 
-  const style: CSSProperties = {
+  const style: React.CSSProperties = {
     boxShadow: isLastLeftPinnedColumn
       ? "-4px 0 4px -4px gray inset"
       : isFirstRightPinnedColumn
@@ -129,9 +129,9 @@ function DraggableTableHeader({
             {header.column.getCanSort() && 
             <ToolTipButton content="Sort" className="group" onClick={header.column.getToggleSortingHandler()}>
             {{
-              asc: <ArrowUpAZ />,
-              desc: <ArrowDownAZ />
-            }[header.column.getIsSorted() as string] ?? <ArrowUpDown className="hidden group-hover:block transition ease-in-out duration-500"/>}
+              asc: <ArrowUpAZIcon />,
+              desc: <ArrowDownAZIcon />
+            }[header.column.getIsSorted() as string] ?? <ArrowUpDownIcon className="hidden group-hover:block transition ease-in-out duration-500"/>}
             </ToolTipButton>}
             {header.column.getCanFilter() &&  
             // <ToolTipButton content="Filter" className="group">
@@ -144,11 +144,11 @@ function DraggableTableHeader({
               // console.log("isPinned:",isPinned)
               isPinned ? header.column.pin(false) : header.column.pin("left")
             }}>
-            {header.column.getIsPinned() ? <PinOff/> : <Pin className="hidden group-hover:block transition ease-in-out duration-500"/>}
+            {header.column.getIsPinned() ? <PinOffIcon/> : <PinIcon className="hidden group-hover:block transition ease-in-out duration-500"/>}
             </ToolTipButton>}
             {!header.column.getIsPinned() && 
             <ToolTipButton content="ReOrder" {...attributes} {...listeners} className="group" suppressHydrationWarning>
-              <GripVertical className="hidden group-hover:block transition ease-in-out duration-500"/>
+              <GripVerticalIcon className="hidden group-hover:block transition ease-in-out duration-500"/>
             </ToolTipButton>}
           </div> 
           <div 
@@ -181,7 +181,7 @@ function DraggableCell ({
   const isFirstRightPinnedColumn =
     isPinned === "right" && cell.column.getIsFirstColumn("right")
 
-  const style: CSSProperties = {
+  const style: React.CSSProperties = {
     boxShadow: isLastLeftPinnedColumn
       ? "-4px 0 4px -4px gray inset"
       : isFirstRightPinnedColumn
@@ -233,7 +233,7 @@ function RowDragHandleCell ({ rowId }: { rowId: string }) {
   return (
     // Alternatively, you could set these attributes on the rows themselves
     <Button variant={"ghost"} className="size-4" {...attributes} {...listeners}>
-      <GripHorizontal/>
+      <GripHorizontalIcon/>
     </Button>
   )
 }
@@ -243,7 +243,7 @@ function DraggableRow({ row }: { row: Row<any> }) {
     id: row.original.id,
   })
 
-  const style: CSSProperties = {
+  const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform), //let dnd-kit do its thing
     transition: transition,
     opacity: isDragging ? 0.9 : 1,
@@ -267,7 +267,7 @@ function TableSettings<TData>({table} : { table: TanStackTable<TData>}) {
     <Sheet>
       <SheetTrigger asChild>
         <ToolTipButton content="Data Table Settings" className="ml-auto">
-          <Settings/>
+          <SettingsIcon/>
         </ToolTipButton>
       </SheetTrigger>
       <SheetContent>
@@ -334,7 +334,7 @@ function TableFilter<TData, TValue>({
     <Popover>
       <PopoverTrigger asChild>
         <ToolTipButton content="Filter" className="group">
-          <ListFilter className="hidden group-hover:block transition ease-in-out duration-500"/>
+          <ListFilterIcon className="hidden group-hover:block transition ease-in-out duration-500"/>
         </ToolTipButton>
       </PopoverTrigger>
      <PopoverContent sideOffset={14} className="w-auto min-w-[640px]" showCloseButton>

@@ -1,7 +1,6 @@
 "use client"
 
-import React from "react"
-import { JSX } from "react"
+import * as React from "react"
 import { AnyFieldApi, useStore } from "@tanstack/react-form"
 import { useFormContext, useFieldContext } from "../hooks/use-form"
 import { Input } from "./input"
@@ -14,19 +13,18 @@ import { Combobox, ComboboxProps } from "./combobox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup } from "./select"
 import { RadioGroup, RadioGroupItem } from "./radio-group"
 import { Captcha } from "./captcha"
-import { DatePicker } from "./date-picker"
+import { DatePickerMultiple, DatePickerRange, DatePickerSingle } from "./date-picker"
 import { cva, type VariantProps } from "class-variance-authority"
-
-import { cn } from "../lib/utils"
 import { DropdownOption, Captcha as CaptchaValue } from "../types/ui-types"
 import useCaptcha from "../hooks/use-captcha"
+import { DateRange } from "react-day-picker"
 
-
+import { cn } from "../lib/utils"
 
 function Form({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      data-slot="form"
+      data-slot="form-root"
       className={cn(
         "bg-card text-card-foreground flex flex-col gap-6 rounded-md border px-2 py-6 shadow-sm h-full",
         className
@@ -75,7 +73,7 @@ function FormAction({ className, ...props }: React.ComponentProps<"div">) {
 function FormContent({ className, ...props }: React.ComponentProps<"form">) {
   return (
     <form
-      data-slot="form-content"
+      data-slot="form"
       className={cn("grid px-6 gap-6 md:grid-cols-2 xl:grid-cols-3", className)}
       {...props}
     />
@@ -138,7 +136,7 @@ type FormFieldProps = {
 } & VariantProps<typeof fieldContentVariants>
 
 type FormFieldRenderProps = {
-  render: (field : AnyFieldApi) => JSX.Element,
+  render: (field : AnyFieldApi) => React.JSX.Element,
 }
 
 function FormFieldError({ className, ...props }: React.ComponentProps<"div">) {
@@ -296,7 +294,7 @@ function FormSwitchField({ classesName, label, showLabel=true, orientation, show
   )
 }
 
-function FormDatePickerField({ classesName, label, showLabel=true, orientation, showError=true, className, ...props } : FormFieldProps & React.ComponentProps<typeof DatePicker>) {
+function FormDatePickerField({ classesName, label, showLabel=true, orientation, showError=true, className, ...props } : FormFieldProps & React.ComponentProps<typeof DatePickerSingle>) {
   return (
     <FormField<Date | undefined> 
       classesName={classesName} 
@@ -306,7 +304,7 @@ function FormDatePickerField({ classesName, label, showLabel=true, orientation, 
       showError={showError}
       render={(field) => (
         <>
-          <DatePicker 
+          <DatePickerSingle
             value={field.state.value}
             onChange={(e) => field.handleChange(e)}
             {...props}
@@ -314,7 +312,49 @@ function FormDatePickerField({ classesName, label, showLabel=true, orientation, 
         </>
       )}
     />
-  )
+  )     
+}
+
+function FormDatePickerRangeField({ classesName, label, showLabel=true, orientation, showError=true, className, ...props } : FormFieldProps & React.ComponentProps<typeof DatePickerRange>) {
+  return (
+    <FormField<DateRange | undefined> 
+      classesName={classesName} 
+      showLabel={showLabel}
+      label={label}
+      orientation={orientation}
+      showError={showError}
+      render={(field) => (
+        <>
+          <DatePickerRange
+            value={field.state.value}
+            onChange={(e) => field.handleChange(e)}
+            {...props}
+          />
+        </>
+      )}
+    />
+  )     
+}
+
+function FormDatePickerMultipleField({ classesName, label, showLabel=true, orientation, showError=true, className, ...props } : FormFieldProps & React.ComponentProps<typeof DatePickerMultiple>) {
+  return (
+    <FormField<DateRange | undefined> 
+      classesName={classesName} 
+      showLabel={showLabel}
+      label={label}
+      orientation={orientation}
+      showError={showError}
+      render={(field) => (
+        <>
+          <DatePickerMultiple
+            value={field.state.value}
+            onChange={(e) => field.handleChange(e)}
+            {...props}
+          />
+        </>
+      )}
+    />
+  )     
 }
 
 function FormComboboxField({ classesName, label, showLabel=true, orientation, showError=true, className, ...props } : FormFieldProps & ComboboxProps) {
@@ -472,6 +512,8 @@ export {
   FormCheckboxField,
   FormSwitchField,
   FormDatePickerField,
+  FormDatePickerRangeField,
+  FormDatePickerMultipleField,
   FormComboboxField,
   FormSelectField,
   FormRadioGroupField,
