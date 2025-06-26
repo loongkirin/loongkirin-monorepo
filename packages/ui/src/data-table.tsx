@@ -69,7 +69,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./sh
 import { Separator } from "./separator";
 import { ToggleGroup, ToggleGroupItem } from "./toggle-group";
 import { Switch } from "./switch";
-import { Popover, PopoverClose, PopoverContent, PopoverTrigger } from "./popover";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
 import { cn } from "../lib/utils";
 
@@ -120,7 +120,7 @@ function DraggableTableHeader({
 
   return (
     <TableHead colSpan={header.colSpan} ref={setNodeRef} style={style} 
-      className={cn(`${isPinned ? "bg-background" : ""}`, className)} {...props}>
+      className={cn(`${isPinned ? "bg-background" : "bg-muted"}`, className)} {...props}>
       <div className={cn("flex items-center", `${ isSystemColumn ? "justify-center" : "justify-between gap-1"}`)}>
         {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
         {!isSystemColumn &&  
@@ -140,13 +140,13 @@ function DraggableTableHeader({
             <TableFilter column={header.column}/>
             }
             {header.column.getCanPin() &&
-            <ToolTipButton content="Pin" className="group" onClick={() => {
+            <ToolTipButton content={isPinned ? "Unpin" : "Pin"} className="group" onClick={() => {
               // console.log("isPinned:",isPinned)
               isPinned ? header.column.pin(false) : header.column.pin("left")
             }}>
-            {header.column.getIsPinned() ? <PinOffIcon/> : <PinIcon className="hidden group-hover:block transition ease-in-out duration-500"/>}
+            {isPinned ? <PinOffIcon/> : <PinIcon className="hidden group-hover:block transition ease-in-out duration-500"/>}
             </ToolTipButton>}
-            {!header.column.getIsPinned() && 
+            {!isPinned && 
             <ToolTipButton content="ReOrder" {...attributes} {...listeners} className="group" suppressHydrationWarning>
               <GripVerticalIcon className="hidden group-hover:block transition ease-in-out duration-500"/>
             </ToolTipButton>}
@@ -270,7 +270,7 @@ function TableSettings<TData>({table} : { table: TanStackTable<TData>}) {
           <SettingsIcon/>
         </ToolTipButton>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="theme-container">
         <SheetHeader className="pb-0">
           <SheetTitle className="text-base">Data Table Settings</SheetTitle>
         </SheetHeader>
@@ -279,7 +279,7 @@ function TableSettings<TData>({table} : { table: TanStackTable<TData>}) {
           <Label className="font-semibold">Data Table Setting</Label>
           <div className="flex gap-4 items-center justify-between pt-3">
             <Label>Page Size:</Label>
-            <ToggleGroup variant="outline" type="single" 
+            <ToggleGroup variant="outline" type="single"
               defaultValue={table.getState().pagination.pageSize.toString()}
               onValueChange={(pageSize) => {table.setPageSize(Number(pageSize))}}>
                 {PAGE_SIZE_LIST.map(pageSize => {
@@ -416,12 +416,14 @@ function getSystemColumnDef<TData, TValue>() : ColumnDef<TData, TValue>[] {
 export type Mode = "server" | "client";
 
 interface DataTableProps<TData, TValue> {
+  className?: string,
   columns: ColumnDef<TData, TValue>[],
   data: TData[],
   model: Mode | undefined,
 }
 
 function DataTable<TData, TValue>({
+  className,
   columns,
   data,
   model,
@@ -541,115 +543,116 @@ function DataTable<TData, TValue>({
   return (
     // NOTE: This provider creates div elements, so don"t nest inside of <table> elements
     //key={`dnd-context-${table.getState().pagination.pageSize}`} Set a key to forces a fresh instance when page size changes,fix page size changes all columns become undraggable.
-    <DndContext
-      key={`dnd-context-${table.getState().pagination.pageSize}`}
-      collisionDetection={closestCenter}
-      modifiers={[restrictToHorizontalAxis]}
-      onDragEnd={handleColumnDragEnd}
-      sensors={sensors}
-    >
-      <div className="p-2 flex flex-col gap-1">
-        <TableSettings table={table}/>
-        <Table className="table-fixed">
-          <TableHeader>
-            {table.getHeaderGroups().map(headerGroup => (
-              <TableRow key={headerGroup.id}>
-                <SortableContext
-                  items={columnOrder}
-                  strategy={horizontalListSortingStrategy}
-                >
-                  {headerGroup.headers.map(header => (
-                    <DraggableTableHeader key={header.id} header={header}/>
-                  ))}
-                </SortableContext>
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows.map(row => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map(cell => (
+    <div className="theme-container p-2 flex flex-col gap-1">
+      <TableSettings table={table}/>
+      <div className="overflow-hidden rounded-md border">
+        <DndContext
+          key={`dnd-context-${table.getState().pagination.pageSize}`}
+          collisionDetection={closestCenter}
+          modifiers={[restrictToHorizontalAxis]}
+          onDragEnd={handleColumnDragEnd}
+          sensors={sensors}
+        >
+          <Table className="table-fixed">
+            <TableHeader>
+              {table.getHeaderGroups().map(headerGroup => (
+                <TableRow key={headerGroup.id}>
                   <SortableContext
-                    key={cell.id}
                     items={columnOrder}
                     strategy={horizontalListSortingStrategy}
                   >
-                    <DraggableCell key={cell.id} cell={cell} />
+                    {headerGroup.headers.map(header => (
+                      <DraggableTableHeader key={header.id} header={header}/>
+                    ))}
                   </SortableContext>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <div className="h-2" />
-        <div className="flex items-center gap-2 justify-end">
-          <Button
-            className="border rounded p-1" variant={"outline"} size={"sm"}
-            onClick={() => table.firstPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            {'<<'}
-          </Button>
-          <Button
-            className="border rounded p-1" variant={"outline"} size={"sm"}
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            {'<'}
-          </Button>
-          <Button
-            className="border rounded p-1" variant={"outline"} size={"sm"}
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            {'>'}
-          </Button>
-          <Button
-            className="border rounded p-1" variant={"outline"} size={"sm"}
-            onClick={() => table.lastPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            {'>>'}
-          </Button>
-          <span className="flex items-center gap-1">
-            <div>Page</div>
-            <strong>
-              {table.getState().pagination.pageIndex + 1} of{' '}
-              {table.getPageCount().toLocaleString()}
-            </strong>
-          </span>
-          <span className="flex items-center gap-1">
-            | Go to page:
-            <Input
-              type="number"
-              min="1"
-              max={table.getPageCount()}
-              defaultValue={table.getState().pagination.pageIndex + 1}
-              onChange={e => {
-                const page = e.target.value ? Number(e.target.value) - 1 : 0
-                table.setPageIndex(page)
-              }}
-              className="border p-1 rounded w-16 h-8"
-            />
-          </span>
-          <Select value={table.getState().pagination.pageSize?.toString()} onValueChange={(pageSize) => {table.setPageSize(Number(pageSize))}}>
-            <SelectTrigger size="sm" className="w-auto py-0 rounded">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {PAGE_SIZE_LIST.map(pageSize => (
-                  <SelectItem key={pageSize} value={pageSize.toString()}>
-                    Show {pageSize}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows.map(row => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map(cell => (
+                    <SortableContext
+                      key={cell.id}
+                      items={columnOrder}
+                      strategy={horizontalListSortingStrategy}
+                    >
+                      <DraggableCell key={cell.id} cell={cell} />
+                    </SortableContext>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </DndContext>
       </div>
-    </DndContext>
+      <div className="h-2" />
+      <div className="flex items-center gap-2 justify-end">
+        <Button
+          className="border rounded p-1" variant={"outline"} size={"sm"}
+          onClick={() => table.firstPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          {'<<'}
+        </Button>
+        <Button
+          className="border rounded p-1" variant={"outline"} size={"sm"}
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          {'<'}
+        </Button>
+        <Button
+          className="border rounded p-1" variant={"outline"} size={"sm"}
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          {'>'}
+        </Button>
+        <Button
+          className="border rounded p-1" variant={"outline"} size={"sm"}
+          onClick={() => table.lastPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          {'>>'}
+        </Button>
+        <span className="flex items-center gap-1">
+          <div>Page</div>
+          <strong>
+            {table.getState().pagination.pageIndex + 1} of{' '}
+            {table.getPageCount().toLocaleString()}
+          </strong>
+        </span>
+        <span className="flex items-center gap-1">
+          | Go to page:
+          <Input
+            type="number"
+            min="1"
+            max={table.getPageCount()}
+            defaultValue={table.getState().pagination.pageIndex + 1}
+            onChange={e => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0
+              table.setPageIndex(page)
+            }}
+            className="border p-1 rounded w-16 h-8"
+          />
+        </span>
+        <Select value={table.getState().pagination.pageSize?.toString()} onValueChange={(pageSize) => {table.setPageSize(Number(pageSize))}}>
+          <SelectTrigger size="sm" className="w-auto py-0 rounded">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {PAGE_SIZE_LIST.map(pageSize => (
+                <SelectItem key={pageSize} value={pageSize.toString()}>
+                  Show {pageSize}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+    </div>
   )
 }
 

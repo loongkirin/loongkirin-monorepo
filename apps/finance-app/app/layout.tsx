@@ -1,8 +1,16 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
 
-const geist = Geist({ subsets: ["latin"] });
+import { META_THEME_COLORS } from "@/config/site"
+import { fontVariables } from "@/lib/fonts"
+import { LayoutProvider } from "@loongkirin/ui/hooks/use-layout"
+import { ThemeProvider } from "@loongkirin/ui/providers/theme-provider";
+import { ActiveThemeProvider } from "@loongkirin/ui/providers/active-theme-provider";
+// import { QueryProvider } from "@/providers/query-provider";
+import { QueryProvider } from "@loongkirin/ui/providers/query-provider";
+import { Toaster } from "@loongkirin/ui/src/sonner";
+// import { Toaster } from "sonner";
+import { cn } from "@loongkirin/ui/lib/utils";
 
 export const metadata: Metadata = {
   title: "Create Turborepo",
@@ -11,12 +19,45 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{
+  children: React.ReactNode
+}>) {
   return (
-    <html lang="en">
-      <body className={geist.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.theme === 'dark' || ((!('theme' in localStorage) || localStorage.theme === 'system') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.querySelector('meta[name="theme-color"]').setAttribute('content', '${META_THEME_COLORS.dark}')
+                }
+                if (localStorage.layout) {
+                  document.documentElement.classList.add('layout-' + localStorage.layout)
+                }
+              } catch (_) {}
+            `,
+          }}
+        />
+        <meta name="theme-color" content={META_THEME_COLORS.light} />
+      </head>
+      <body
+        className={cn(
+          "text-foreground group/body overscroll-none font-sans antialiased [--footer-height:calc(var(--spacing)*14)] [--header-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)]",
+          fontVariables, 
+        )}
+      >
+        <ThemeProvider>
+          <LayoutProvider>
+            <ActiveThemeProvider>
+              <QueryProvider>
+                {children}
+              </QueryProvider>
+              <Toaster/>
+            </ActiveThemeProvider>
+          </LayoutProvider>
+        </ThemeProvider>
+      </body>
     </html>
-  );
+  )
 }

@@ -36,7 +36,7 @@ export default async function PaymentPage() {
   const data = await getData()
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="theme-container container mx-auto py-10">
       <DataTable columns={columns} data={data} model={"client"}/>
     </div>
   )

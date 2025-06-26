@@ -47,7 +47,7 @@ function DatePickerSingle ({
           {innerValue ? format(innerValue, "PPP") : <span>{placeholder}</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0 min-w-[var(--radix-popover-trigger-width)]">
+      <PopoverContent className="theme-container w-auto p-0 min-w-[var(--radix-popover-trigger-width)]">
         <Calendar
           selected={innerValue}
           onSelect={(
@@ -100,7 +100,7 @@ function DatePickerRange ({
           {innerValue ? `${innerValue?.from ? format(innerValue.from, "PPP") : ""}${innerValue?.to ? `${"-" + format(innerValue.to, "PPP")}`  : ""}` : <span>{placeholder}</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0 min-w-[var(--radix-popover-trigger-width)]">
+      <PopoverContent className="theme-container w-auto p-0 min-w-[var(--radix-popover-trigger-width)]">
         <Calendar
           selected={innerValue}
           onSelect={(
@@ -160,7 +160,7 @@ function DatePickerMultiple ({
           ) : <span>{placeholder}</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0 min-w-[var(--radix-popover-trigger-width)]">
+      <PopoverContent className="theme-container w-auto p-0 min-w-[var(--radix-popover-trigger-width)]">
         <Calendar
           selected={innerValue}
           onSelect={(
@@ -230,7 +230,7 @@ function DatePicker ({
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0 min-w-[var(--radix-popover-trigger-width)]">
+      <PopoverContent className="theme-container w-auto p-0 min-w-[var(--radix-popover-trigger-width)]">
         {mode === "single" && (
           <Calendar
             mode={mode}

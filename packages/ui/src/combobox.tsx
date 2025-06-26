@@ -43,8 +43,8 @@ function Combobox({id, name, dropdownOptions, selectPlaceholder, searchPlacehold
           <ChevronsUpDownIcon className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0 min-w-[var(--radix-popover-trigger-width)]">
-        <Command filter={commandFilter}>
+      <PopoverContent className="theme-container w-auto p-0 min-w-[var(--radix-popover-trigger-width)]">
+        <Command filter={commandFilter} className="theme-container">
           <CommandInput placeholder={searchPlaceholder}/>
           <CommandList>
             <CommandEmpty>{emptyDataContent}</CommandEmpty>
