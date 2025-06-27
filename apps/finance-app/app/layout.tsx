@@ -8,7 +8,7 @@ import { ThemeProvider } from "@loongkirin/ui/providers/theme-provider";
 import { ActiveThemeProvider } from "@loongkirin/ui/providers/active-theme-provider";
 // import { QueryProvider } from "@/providers/query-provider";
 import { QueryProvider } from "@loongkirin/ui/providers/query-provider";
-import { Toaster } from "@loongkirin/ui/src/sonner";
+import { Toaster } from "@loongkirin/ui/components/sonner";
 // import { Toaster } from "sonner";
 import { cn } from "@loongkirin/ui/lib/utils";
 

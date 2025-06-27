@@ -2,7 +2,7 @@
 
 import { useState, JSX } from "react"
 
-import { Button } from "../src/button"
+import { Button } from "../components/button"
 import {
   Dialog,
   DialogContent,
@@ -10,7 +10,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle
-} from "../src/dialog"
+} from "../components/dialog"
 
 export const useConfirm = (
   title: string,

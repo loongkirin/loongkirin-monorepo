@@ -17,13 +17,13 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@loongkirin/ui/src/collapsible"
-import { Label } from "@loongkirin/ui/src/label"
+} from "@loongkirin/ui/components/collapsible"
+import { Label } from "@loongkirin/ui/components/label"
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@loongkirin/ui/src/avatar"
+} from "@loongkirin/ui/components/avatar"
 import {
   Sidebar,
   SidebarContent,
@@ -42,7 +42,7 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
   SidebarTrigger,
-} from "@loongkirin/ui/src/sidebar"
+} from "@loongkirin/ui/components/sidebar"
 import { AppSidebarMenu } from "@/components/sidebar-menu"
 import { useIsMobile } from "@loongkirin/ui/hooks/use-mobile"
 

@@ -1,5 +1,5 @@
 import { Payment, columns } from "@/features/accounts/shared-form"
-import { DataTable } from "@loongkirin/ui/src/data-table"
+import { DataTable } from "@loongkirin/ui/components/data-table"
 
 async function getData(): Promise<Payment[]> {
   // Fetch data from your API here.

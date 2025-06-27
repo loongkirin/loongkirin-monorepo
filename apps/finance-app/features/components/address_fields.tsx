@@ -1,4 +1,4 @@
-import { withForm } from "@loongkirin/ui/src/form"
+import { withForm } from "@loongkirin/ui/components/form"
 import { peopleFormOpts } from "../accounts/shared-form"
 
 export const AddressFields = withForm({

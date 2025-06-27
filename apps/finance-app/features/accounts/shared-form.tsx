@@ -3,10 +3,10 @@
 import { formOptions } from '@tanstack/react-form'
 import { z } from 'zod'
 import { ColumnDef } from "@tanstack/react-table"
-import { Button } from '@loongkirin/ui/src/button';
+import { Button } from '@loongkirin/ui/components/button';
 import {ArrowUpDown, ArrowDown, ArrowUp, ArrowUpAZ, ArrowDownAZ, Funnel } from 'lucide-react'
-import { Popover, PopoverContent, PopoverTrigger } from '@loongkirin/ui/src/popover';
-import { Input } from '@loongkirin/ui/src/input';
+import { Popover, PopoverContent, PopoverTrigger } from '@loongkirin/ui/components/popover';
+import { Input } from '@loongkirin/ui/components/input';
 
 export const PeopleSchema = z.object({
   fullName: z

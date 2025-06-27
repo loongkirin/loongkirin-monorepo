@@ -9,11 +9,11 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "@loongkirin/ui/src/navigation-menu"
+} from "@loongkirin/ui/components/navigation-menu"
 import { useIsMobile } from "@loongkirin/ui/hooks/use-mobile"
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@loongkirin/ui/src/sheet"
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@loongkirin/ui/components/sheet"
 import { useState } from "react"
-import { Button } from "@loongkirin/ui/src/button"
+import { Button } from "@loongkirin/ui/components/button"
 
 const routes = [
   {

@@ -1,15 +1,15 @@
 "use client"
 
-import { Card, CardContent } from "@loongkirin/ui/src/card"
+import { Card, CardContent } from "@loongkirin/ui/components/card"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 // import { useMutation } from "@tanstack/react-query"
 import { Query } from "@loongkirin/ui/providers/query-provider"
 import { accountApi, createRequest, RegisterRequest, RegisterSchema, Request } from "@/features/accounts/api/account"
 // import { toast } from "sonner"
-import { Sonner } from "@loongkirin/ui/src/sonner"
-import { useAppForm } from "@loongkirin/ui/src/form"
-import { Form, FormContent, FormFooter, FormHeader, FormTitle } from "@loongkirin/ui/src/form-components"
+import { Sonner } from "@loongkirin/ui/components/sonner"
+import { useAppForm } from "@loongkirin/ui/components/form"
+import { Form, FormContent, FormFooter, FormHeader, FormTitle } from "@loongkirin/ui/components/form-components"
 
 export function RegisterForm() {
   const router = useRouter()

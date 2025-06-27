@@ -1,14 +1,10 @@
 "use client"
 
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react"
+import { createContext, ReactNode, useContext, useEffect } from "react"
+import useLocalStorage from "../hooks/use-localstorage"
 
 const DEFAULT_THEME = "default"
+const THEME_KEY = "active_theme"
 
 type ThemeContextType = {
   activeTheme: string
@@ -24,9 +20,7 @@ export function ActiveThemeProvider({
   children: ReactNode
   initialTheme?: string
 }) {
-  const [activeTheme, setActiveTheme] = useState<string>(
-    () => initialTheme || DEFAULT_THEME
-  )
+  const [activeTheme, setActiveTheme] = useLocalStorage(THEME_KEY, initialTheme || DEFAULT_THEME)
 
   useEffect(() => {
     Array.from(document.body.classList)

@@ -1,18 +1,18 @@
 "use client"
 
-import { Card, CardContent } from "@loongkirin/ui/src/card"
-import { Input } from "@loongkirin/ui/src/input"
-import { Label } from "@loongkirin/ui/src/label"
+import { Card, CardContent } from "@loongkirin/ui/components/card"
+import { Input } from "@loongkirin/ui/components/input"
+import { Label } from "@loongkirin/ui/components/label"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { accountApi, createRequest, LoginRequest, LoginSchema } from "@/features/accounts/api/account";
 // import {toast} from "sonner"
-import { Sonner } from "@loongkirin/ui/src/sonner"
+import { Sonner } from "@loongkirin/ui/components/sonner"
 // import { useMutation } from "@tanstack/react-query";
 import { Query } from "@loongkirin/ui/providers/query-provider"
 import Image from "next/image";
-import { useAppForm } from "@loongkirin/ui/src/form"
-import { Form, FormContent, FormFooter, FormHeader, FormTitle } from "@loongkirin/ui/src/form-components"
+import { useAppForm } from "@loongkirin/ui/components/form"
+import { Form, FormContent, FormFooter, FormHeader, FormTitle } from "@loongkirin/ui/components/form-components"
 
 export function LoginForm() {
   const router = useRouter();

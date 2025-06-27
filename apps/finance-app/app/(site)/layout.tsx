@@ -1,11 +1,11 @@
-import { ModeSwitcher } from "@loongkirin/ui/src/mode-switcher"
+import { ModeSwitcher } from "@loongkirin/ui/components/mode-switcher"
 import { NavHeader } from "@/components/nav-header"
 import { SiteFooter } from "@/components/site-footer"
-import { ThemeSelector } from "@loongkirin/ui/src/theme-selector"
-import { Separator } from "@loongkirin/ui/src/separator"
+import { ThemeSelector } from "@loongkirin/ui/components/theme-selector"
+import { Separator } from "@loongkirin/ui/components/separator"
 import {
   SidebarInset,
-} from "@loongkirin/ui/src/sidebar"
+} from "@loongkirin/ui/components/sidebar"
 
 export default async function SiteLayout({
   children,

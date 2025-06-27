@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react"
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem } from "@loongkirin/ui/src/sidebar"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@loongkirin/ui/src/collapsible"
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem } from "@loongkirin/ui/components/sidebar"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@loongkirin/ui/components/collapsible"
 import { ChevronRightIcon } from "lucide-react"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@loongkirin/ui/src/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@loongkirin/ui/components/tooltip"
 
 const AppSidebarMenu = (props: { data: any }) => {
   return (

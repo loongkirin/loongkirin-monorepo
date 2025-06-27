@@ -1,13 +1,13 @@
 "use client"
 
 import React from "react"
-import { Button } from "@loongkirin/ui/src/button"
-import { useAppForm } from "@loongkirin/ui/src/form"
-import { Form, FormAction, FormContent, FormFooter, FormHeader, FormTitle } from "@loongkirin/ui/src/form-components"
+import { Button } from "@loongkirin/ui/components/button"
+import { useAppForm } from "@loongkirin/ui/components/form"
+import { Form, FormAction, FormContent, FormFooter, FormHeader, FormTitle } from "@loongkirin/ui/components/form-components"
 import { peopleFormOpts, PeopleSchema } from "../accounts/shared-form"
 import { AddressFields } from "./address_fields"
-import { Label } from "@loongkirin/ui/src/label"
-import { Input } from "@loongkirin/ui/src/input"
+import { Label } from "@loongkirin/ui/components/label"
+import { Input } from "@loongkirin/ui/components/input"
 import { es, zhCN } from "date-fns/locale";
 
 const frameworks = [

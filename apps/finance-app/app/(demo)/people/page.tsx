@@ -1,10 +1,10 @@
 import { FormDist } from '@/features/components/login-form-dist'
 import PaymentPage from '@/features/components/payment-data-table'
-import { Calendar } from '@loongkirin/ui/src/calendar'
-import { Card, CardContent } from '@loongkirin/ui/src/card'
-import { DatePicker } from '@loongkirin/ui/src/date-picker'
-import { ModeSwitcher } from '@loongkirin/ui/src/mode-switcher'
-import { ThemeSelector } from '@loongkirin/ui/src/theme-selector'
+import { Calendar } from '@loongkirin/ui/components/calendar'
+import { Card, CardContent } from '@loongkirin/ui/components/card'
+import { DatePicker } from '@loongkirin/ui/components/date-picker'
+import { ModeSwitcher } from '@loongkirin/ui/components/mode-switcher'
+import { ThemeSelector } from '@loongkirin/ui/components/theme-selector'
 import React from 'react'
 
 const start = new Date(2025, 5, 5)
