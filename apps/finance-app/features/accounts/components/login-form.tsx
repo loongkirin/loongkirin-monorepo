@@ -5,17 +5,21 @@ import { Input } from "@loongkirin/ui/components/input"
 import { Label } from "@loongkirin/ui/components/label"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { accountApi, createRequest, LoginRequest, LoginSchema } from "@/features/accounts/api/account";
+import { fetchCaptcha, getAccessToken, getRefreshToken, login, saveOAuth } from "@/features/accounts/actions"
 // import {toast} from "sonner"
 import { Sonner } from "@loongkirin/ui/components/sonner"
-// import { useMutation } from "@tanstack/react-query";
+// import { useMutation } from "@tanstack/react-query"
 import { Query } from "@loongkirin/ui/providers/query-provider"
-import Image from "next/image";
+import Image from "next/image"
 import { useAppForm } from "@loongkirin/ui/components/form"
 import { Form, FormContent, FormFooter, FormHeader, FormTitle } from "@loongkirin/ui/components/form-components"
+import { LoginRequest, OAuth } from "../types"
+import { LoginSchema } from "../schema"
+import { useAuth } from "@/hooks/useAuth"
 
 export function LoginForm() {
-  const router = useRouter();
+  const router = useRouter()
+  const {setUser, setOAuth, setTenant} = useAuth((state) => state)
 
   const form = useAppForm({
     defaultValues:{
@@ -33,26 +37,43 @@ export function LoginForm() {
     onSubmit: ({ value }) => {
       // console.log("login form value:", value)
       // alert(JSON.stringify(value, null, 2))
-      mutation.mutate(value);
+      mutation.mutate(value)
     },
   })
 
   const mutation = Query.useMutation({
     mutationFn: (data: LoginRequest) => {
       console.log("register form value:", data)
-      const requestData = createRequest(data)
-      return accountApi.login(requestData);
+      return login(data)
     },
-    onSuccess: (data) => {
-      // console.log("login success", data);
-      if(data.code === 200) {
+    onSuccess: async (response) => {
+      console.log("login success, response: ", response)
+      if(response.code === 200) {
+        // const user = response.result.data
+        if(response.result && response.result.data) {
+          setUser(response.result.data)
+          console.log("accessToken: ", response.result.data?.access_token)
+          console.log("refreshToken: ", response.result.data?.refresh_token)
+          const oauth: OAuth = {
+            access_token: response.result.data?.access_token,
+            refresh_token: response.result.data?.refresh_token,
+            session_id: response.result.data?.session_id,
+          }
+          await saveOAuth(oauth)
+          console.log("cookie accessToken: ", await getAccessToken())
+          console.log("cookie refreshToken: ", await getRefreshToken())
+          setOAuth(oauth)
+        }
+        fetchCaptcha().then(data => {
+          console.log("server fetchCaptcha data: ", data)
+        })
         router.push("/people")
       } else {
-        Sonner.toast.error(data.message || "Error occured while logging, please try again later")
+        Sonner.toast.error(response.message || "Error occured while logging, please try again later")
       }
     },
     onError: (error) => {
-      console.log("login error", error);
+      console.log("login error", error)
       Sonner.toast.error("Error occured while logging, please try again later")
     }
   })
@@ -75,9 +96,9 @@ export function LoginForm() {
             <FormContent
               className="md:grid-cols-1 xl:grid-cols-1"
               onSubmit={e => {
-                e.preventDefault();
-                e.stopPropagation();
-                form.handleSubmit();
+                e.preventDefault()
+                e.stopPropagation()
+                form.handleSubmit()
               }}>
               <form.AppField
                 name="email"
@@ -135,7 +156,7 @@ export function LoginForm() {
                 </span>
               </div>
               <div className="text-center text-sm mt-2">
-                Don&apos;t have an account?{" "}
+                Don&apost have an account?{" "}
                 <Link href="/account/register" className="underline underline-offset-4">
                   Sign up
                 </Link>

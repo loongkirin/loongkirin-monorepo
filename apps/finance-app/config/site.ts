@@ -7,7 +7,7 @@ export const siteConfig = {
     github: "https://github.com/loongkirin/loongkirin-monorepo",
   },
   themeKey: "active_theme",
-  baseApiUrl: "/api/v1",
+  baseApiUrl: "http://localhost:8081/api/v1",
 }
 
 export type SiteConfig = typeof siteConfig

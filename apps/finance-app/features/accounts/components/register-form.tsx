@@ -5,11 +5,13 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 // import { useMutation } from "@tanstack/react-query"
 import { Query } from "@loongkirin/ui/providers/query-provider"
-import { accountApi, createRequest, RegisterRequest, RegisterSchema, Request } from "@/features/accounts/api/account"
+import { register } from "@/features/accounts/actions"
 // import { toast } from "sonner"
 import { Sonner } from "@loongkirin/ui/components/sonner"
 import { useAppForm } from "@loongkirin/ui/components/form"
 import { Form, FormContent, FormFooter, FormHeader, FormTitle } from "@loongkirin/ui/components/form-components"
+import { RegisterRequest } from "../types"
+import { RegisterSchema } from "../schema"
 
 export function RegisterForm() {
   const router = useRouter()
@@ -32,14 +34,13 @@ export function RegisterForm() {
     },
     onSubmit: ({ value }) => {
       console.log("register form value:", value)
-      const requestData = createRequest(value)
-      mutation.mutate(requestData);
+      mutation.mutate(value);
     },
   })
 
   const mutation = Query.useMutation({
-    mutationFn: (data: Request<RegisterRequest>) => {
-      return accountApi.register(data);
+    mutationFn: (data: RegisterRequest) => {
+      return register(data);
     },
     onSuccess: (data) => {
       console.log("register success", data);
